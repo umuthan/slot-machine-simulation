@@ -330,7 +330,7 @@ class App extends Component {
     // Sum all the points
     newPoint = topLinePoint + centerLinePoint + bottomLinePoint;
 
-    // Set the points and blink the pay table
+    // Set the points and blink the pay-table
     this.setState({
       totalPoint: totalPoint + newPoint,
       pointAnimation: 'animation'
@@ -429,7 +429,7 @@ class App extends Component {
   }
 
   render(){
-    
+
     const {
       mode,
       disabled,
@@ -477,7 +477,7 @@ class App extends Component {
 
         <footer>
 
-          <h2>PAY TABLE</h2>
+          <h2>PAY-TABLE</h2>
           <div id="totalPoint" className={pointAnimation}>
             {totalPoint.toString().split('').map((point,i)=>(
               <span key={i}>{point}</span>
