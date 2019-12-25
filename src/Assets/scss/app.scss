@@ -1,0 +1,275 @@
+@import 'reset';
+
+body {
+
+  background: #000000;
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  font-family: monospace;
+
+  color: #ffffff
+
+}
+
+#root {
+
+  display: flex;
+  justify-content: center;
+  margin:auto;
+  flex-direction: column;
+
+}
+
+#machine {
+
+  header {
+
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background: #f9f9f9;
+    padding: 30px 0;
+
+    h1 {
+
+      text-align: center;
+      font-size: 48px;
+      font-weight: bold;
+      color: #000000;
+
+    }
+
+  }
+
+  #reels {
+
+    display: flex;
+    position: relative;
+
+    .reelContainer {
+      position: relative;
+    }
+
+    .winLine {
+
+      position: absolute;
+      border: 5px solid #ff0000;
+      width: 535px;
+      height: 121px;
+      z-index: 200;
+      opacity: 0;
+
+      &#top {
+
+        top: 5px;
+
+      }
+
+      &#center {
+
+        top: 131px;
+
+      }
+
+      &#bottom {
+
+        top: 257px;
+
+      }
+
+      &.animation {
+
+        animation: blinkReverse 2s linear;
+
+      }
+
+    }
+
+    .reel {
+
+      &:nth-child(1) {
+
+        margin-right: 10px;
+
+      }
+
+      &:nth-child(3) {
+
+        margin-left: 10px;
+
+      }
+
+      display: flex;
+      flex-direction: column;
+      width: 141px;
+      height: 363px;
+      overflow: hidden;
+      padding: 10px;
+      border-radius: 10px;
+      border-image: linear-gradient(180deg, rgba(#f9f9f9,100) 0%, rgba(#606061,100) 100%);
+      border-width: 7px;
+      border-style: solid;
+      border-image-slice: 20;
+      position: relative;
+
+      .overlay {
+
+        position: absolute;
+        top:0;
+        left:0;
+        background: linear-gradient(180deg, rgba(#000000,100) 0%, rgba(#000000,0) 30%, rgba(#000000,0) 70%, rgba(#000000,100) 100%);
+        height: 100%;
+        width: 100%;
+        z-index:100;
+
+      }
+
+      .animationPlay {
+
+        animation: spin .25s ease infinite;
+
+      .animationStop {
+
+          animation: spin .25s ease;
+
+        }
+
+      }
+
+      img {
+
+        width: 141px;
+        height: 121px;
+
+      }
+
+    }
+
+  }
+
+  footer {
+
+    padding: 10px 7px 20px 0;
+    background: #606061;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+
+      text-align:center;
+      font-weight: bold;
+      font-size: 18px;
+
+    }
+
+    #totalPoint {
+
+      display: flex;
+      padding: 10px 0;
+      justify-content: center;
+
+      &.animation {
+        animation: blink 1s linear;
+      }
+
+      span {
+
+        display: block;
+        font-size: 24px;
+        padding: 20px 10px;
+        margin: 2px;
+        width: 20px;
+        text-align: center;
+        border: 2px solid #f1f1f1;
+        background: #000000;
+
+      }
+
+    }
+
+    #coin {
+
+      background: #c1c1c1;
+      border: 2px solid #cccccc;
+      color: #000000;
+      width: 200px;
+      padding: 5px;
+      font-size: 14px;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .spinButton {
+
+      border: 1px solid #ff0000;
+      background: #840000;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 10px 30px;
+      margin: 5px 0;
+
+      &:disabled {
+
+        opacity: .5;
+
+      }
+
+    }
+
+    .modeButton {
+
+      color: #ffffff;
+      background: none;
+      text-decoration: underline;
+      border: none;
+      font-size: 10px;
+      margin-top: 10px;
+
+    }
+
+    form {
+
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0 0 0;
+
+      label {
+
+        display: flex;
+
+      }
+
+    }
+
+  }
+
+}
+
+/* Effects */
+@keyframes spin {
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(0, -242px, 0); }
+  100% { transform: translate3d(0, -605px, 0); }
+}
+
+@keyframes blink {
+  0%{opacity: 1;}
+  25%{opacity: .5;}
+  50%{opacity: 0;}
+  75%{opacity: .5;}
+  100%{opacity: 1;}
+}
+
+@keyframes blinkReverse {
+  0%{opacity: 0;}
+  25%{opacity: .5;}
+  50%{opacity: 1;}
+  75%{opacity: .5;}
+  100%{opacity: 0;}
+}
