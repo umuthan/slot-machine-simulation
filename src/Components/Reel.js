@@ -1,3 +1,11 @@
+/**
+ * Slot Machine Simulation - Reel Component
+ * https://github.com/umuthan/slot-machine-simulation
+ *
+ * Author: Umuthan Uyan
+ *
+ */
+
 import React, { Component } from 'react';
 
 import { getSymbol } from '../Functions/Reel';

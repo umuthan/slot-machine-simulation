@@ -1,3 +1,12 @@
+/**
+ * Slot Machine Simulation - Functions
+ * https://github.com/umuthan/slot-machine-simulation
+ *
+ * Author: Umuthan Uyan
+ *
+ */
+
+
 /*
 **
 ** Setting Reel Symbol in order

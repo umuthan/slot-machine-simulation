@@ -1,3 +1,11 @@
+/**
+ * Slot Machine Simulation - App
+ * https://github.com/umuthan/slot-machine-simulation
+ *
+ * Author: Umuthan Uyan
+ *
+ */
+
 import React, { Component } from 'react';
 import './Assets/scss/app.scss';
 
@@ -6,6 +14,7 @@ import { getRandomSymbol, getSymbol, pointRules, reelSymbols, reelLines } from '
 
 class App extends Component {
 
+  // Setting the default values
   state = {
     disabled: false,
     mode: 'random',
@@ -29,14 +38,23 @@ class App extends Component {
     winLineBottomLineAnimation: false
   }
 
+  /*
+  **
+  ** Spin Function
+  **
+  */
   spinIt = () => {
 
+    // Get the current balance
     const {
       balance
     } = this.state;
 
+    // If balance is higher than 0 spin the reels.
     if(balance > 0) {
 
+      // Setting values for spinning
+      // Stopping animations, disable the SPIN button
       this.setState({
         disabled: true,
         balance: balance-1,
@@ -48,6 +66,8 @@ class App extends Component {
 
       if(this.state.mode === 'fixed') {
 
+        // In fixed mode start animations,
+        // all the positions are selected by user
         this.setState({
           reel1Animation: true,
           reel2Animation: true,
@@ -56,6 +76,8 @@ class App extends Component {
 
       } else {
 
+        // Start the animations,
+        // Random selection for reels
         this.setState({
           reel1Animation: true,
           reel2Animation: true,
@@ -76,22 +98,27 @@ class App extends Component {
 
       }
 
+      // Stop the first reel animation after 500 ms
       this.reel1AnimationTimeoutID = setTimeout(function () {
         this.setState({
           reel1Animation: false
         });
       }.bind(this), 500);
 
+      // Stop the first reel animation after 1000 ms
       this.reel2AnimationTimeoutID = setTimeout(function () {
         this.setState({
           reel2Animation: false
         });
       }.bind(this), 1000);
 
+      // Stop the first reel animation after 1500 ms
       this.reel3AnimationTimeoutID = setTimeout(function () {
         this.setState({
           reel3Animation: false
         });
+
+        // Start the getPoint function to get points
         this.getPoint();
       }.bind(this), 1500);
 
@@ -99,11 +126,18 @@ class App extends Component {
 
   }
 
+  /*
+  **
+  ** Set Reel position based on user selection from the form in fixed mode
+  **
+  */
   setReelPosition = (event) => {
 
+    // Get the first reel line position and symbol
     let reel1Line = event.target.elements['reel-1-line'].value;
     let reel1Symbol = event.target.elements['reel-1-symbol'].value;
 
+    // Get and put the other symbols based on selection
     if(reel1Line === 'TOP') {
       this.setState({
         reel1TopSymbol: reel1Symbol
@@ -139,9 +173,11 @@ class App extends Component {
       })
     }
 
+    // Get the second reel line position and symbol
     let reel2Line = event.target.elements['reel-2-line'].value;
     let reel2Symbol = event.target.elements['reel-2-symbol'].value;
 
+    // Get and put the other symbols based on selection
     if(reel2Line === 'TOP') {
       this.setState({
         reel2TopSymbol: reel2Symbol
@@ -177,9 +213,11 @@ class App extends Component {
       })
     }
 
+    // Get the third reel line position and symbol
     let reel3Line = event.target.elements['reel-3-line'].value;
     let reel3Symbol = event.target.elements['reel-3-symbol'].value;
 
+    // Get and put the other symbols based on selection
     if(reel3Line === 'TOP') {
       this.setState({
         reel3TopSymbol: reel3Symbol
@@ -215,18 +253,26 @@ class App extends Component {
       })
     }
 
+    // Set the mode to fixed and spin the reels based on user selection
     this.setState({
       mode: 'fixed'
     }, () => {
       this.spinIt();
     })
 
+    // Stay cool after form submit
     event.preventDefault();
 
   }
 
+  /*
+  **
+  ** Get the Points after spinning
+  **
+  */
   getPoint = () => {
 
+    // Get current values
     const {
       reel1TopSymbol,
       reel1CenterSymbol,
@@ -241,16 +287,21 @@ class App extends Component {
       balance
     } = this.state;
 
+    // Set total new point to zero
     let newPoint = 0;
 
+    // Set the Points of line to zero
     let topLinePoint = 0;
     let centerLinePoint = 0;
     let bottomLinePoint = 0;
 
+    // Get the lines
     let topLine = [reel1TopSymbol,reel2TopSymbol,reel3TopSymbol];
     let centerLine = [reel1CenterSymbol,reel2CenterSymbol,reel3CenterSymbol];
     let bottomLine = [reel1BottomSymbol,reel2BottomSymbol,reel3BottomSymbol];
 
+    // Get the total point of top line
+    // If there is win start the animation
     topLinePoint = pointRules(topLine, 'top');
     if(topLinePoint>0) {
       this.setState({
@@ -258,6 +309,8 @@ class App extends Component {
       })
     }
 
+    // Get the total point of center line
+    // If there is win start the animation
     centerLinePoint = pointRules(centerLine, 'center');
     if(centerLinePoint>0) {
       this.setState({
@@ -265,6 +318,8 @@ class App extends Component {
       })
     }
 
+    // Get the total point of bottom line
+    // If there is win start the animation
     bottomLinePoint = pointRules(bottomLine, 'bottom');
     if(bottomLinePoint>0) {
       this.setState({
@@ -272,13 +327,16 @@ class App extends Component {
       })
     }
 
+    // Sum all the points
     newPoint = topLinePoint + centerLinePoint + bottomLinePoint;
 
+    // Set the points and blink the pay table
     this.setState({
       totalPoint: totalPoint + newPoint,
       pointAnimation: 'animation'
     })
 
+    // Set disabled to false to spin again
     if(balance>0) {
 
       this.setState({
@@ -289,10 +347,17 @@ class App extends Component {
 
   }
 
+  /*
+  **
+  ** Set the Balance Indicator
+  **
+  */
   setBalance = (event) => {
 
+    // Get the new balance from input
     let newBalance = event.target.value;
 
+    // If new balance is greater than 0 and below than 5000 set it
     if(newBalance<=5000 && newBalance >=0) {
       this.setState({
         balance: newBalance
@@ -313,6 +378,11 @@ class App extends Component {
 
   }
 
+  /*
+  **
+  ** Switch the mode
+  **
+  */
   toggleMode = () => {
 
     const {
@@ -333,6 +403,11 @@ class App extends Component {
 
   }
 
+  /*
+  **
+  ** First settings after component mounted
+  **
+  */
   componentDidMount() {
 
     /* Setting the random position of reels */
@@ -354,7 +429,7 @@ class App extends Component {
   }
 
   render(){
-
+    
     const {
       mode,
       disabled,
