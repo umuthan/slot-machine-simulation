@@ -16,6 +16,7 @@ Slot Machine Simulation
 
 #### Features
 
+* You can see real spinning effect after pressing Spin button,
 * You can choose mode (random or fixed),
 * You can change your balance indicator,
 * You can see the win lines after spin.
